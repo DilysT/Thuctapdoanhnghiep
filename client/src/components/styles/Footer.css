@@ -1,0 +1,39 @@
+.footer-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+  position: relative;
+}
+
+.footer-title::after {
+  content: '';
+  display: block;
+  width: 40px;
+  height: 2px;
+  background-color: #bfa16e;
+  margin-top: 6px;
+}
+
+.footer-gallery {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.footer-img {
+  width: 48%;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 4px;
+  border: 1px solid #444;
+}
+
+.footer-link {
+  color: #ccc;
+  text-decoration: none;
+}
+
+.footer-link:hover {
+  color: #bfa16e;
+  text-decoration: underline;
+}
+

@@ -1,0 +1,121 @@
+/* ===== HERO WRAPPER ===== */
+.hero-banner {
+  position: relative;
+  isolation: isolate;        /* cô lập z-index trong section này */
+  overflow: visible;         /* không cắt nội dung cards */
+  min-height: 520px;
+  padding-inline: clamp(12px, 3vw, 24px);
+}
+
+/* Chỉ cắt NỀN */
+.hero-bg-guard {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;          /* chỉ nền bị cắt */
+  z-index: 0;                /* nằm dưới mọi thứ */
+  border-radius: 0;
+}
+
+/* ===== BACKGROUND ===== */
+.hero-background {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  filter: saturate(1.05) contrast(1.05) brightness(0.98);
+  transform: scale(1.02);
+  opacity: 1;
+}
+
+.hero-bg-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(0,0,0,0.20) 0%,
+    rgba(0,0,0,0.12) 35%,
+    rgba(0,0,0,0.06) 65%,
+    rgba(0,0,0,0.00) 100%
+  );
+  z-index: 1;
+  pointer-events: none;
+}
+
+/* ===== FOREGROUND (NỘI DUNG) ===== */
+.hero-foreground {           /* bọc toàn bộ heading + row cards */
+  position: relative;
+  z-index: 3;                /* cao hơn mọi background/đồ hoạ */
+}
+
+.hero-banner h2,
+.hero-banner p.lead {
+  text-shadow: 0 1px 2px rgba(0,0,0,0.25);
+}
+
+/* ===== CARDS ===== */
+.hero-card {
+  position: relative;
+  z-index: 3;                /* đảm bảo luôn trên các lớp trang trí */
+  overflow: hidden;
+  border-radius: 12px;
+  display: block;
+  height: 100%;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.35);
+  background: rgba(255,255,255,0.06);
+  backdrop-filter: saturate(120%);
+  will-change: transform;    /* mượt khi hover */
+}
+
+.hero-card:hover { z-index: 4; }
+
+.hero-img-wrapper { 
+  position: relative; 
+  height: 360px; 
+}
+
+.hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.hero-card:hover .hero-img { 
+  transform: scale(1.04); 
+}
+
+.hero-overlay {
+  position: absolute;
+  bottom: 0; left: 0; width: 100%;
+  background: linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%);
+  padding: 1rem;
+  transform: translateY(100%);
+  transition: transform 0.35s ease;
+}
+
+.hero-card:hover .hero-overlay { transform: translateY(0%); }
+
+.hero-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
+.hero-date  { font-size: 0.85rem; opacity: 0.9; margin: 0; }
+
+/* Ngày dạng pill */
+.hero-date-badge{
+  display:inline-block;padding:6px 10px;margin:0 0 8px 0;
+  font-size:.85rem;font-weight:600;color:rgba(255,255,255,.95);line-height:1;
+  background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.25);
+  border-radius:8px;backdrop-filter:blur(4px) saturate(120%);
+  box-shadow:0 2px 8px rgba(0,0,0,.35);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 991px){ .hero-img-wrapper{ height:300px; } }
+@media (max-width: 575px){ .hero-img-wrapper{ height:240px; } }

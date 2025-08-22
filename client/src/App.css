@@ -1,0 +1,53 @@
+.App {
+  text-align: center;
+}
+/* Khi ở dark mode, cho toàn bộ text trong PostDetailVictoria trắng hoàn toàn */
+/* App.css hoặc file css global của bạn */
+body.dark .post-detail-content,
+html.dark .post-detail-content {
+  color: #fff !important; /* Toàn bộ nội dung chính thành trắng */
+}
+body.dark .post-detail-content h1,
+body.dark .post-detail-content h5 {
+  color: #fff !important;
+}
+body.dark .post-detail-content p {
+  color: #fff !important;
+}
+
+
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,174 @@
+/* ========================
+   BODY LIGHT / DARK
+=========================== */
+body.bg-light { background-color:#ffffff; color:#212529; }
+body.bg-dark  { background-color:#121212; color:#ffffff; }
+
+/* ========================
+   NAVBAR BASE
+=========================== */
+.navbar {
+  position: -webkit-sticky; /* Safari */
+  position: sticky;
+  top: 0;
+  z-index: 1050;
+  padding-top:.3rem !important;
+  padding-bottom:.3rem !important;
+  border-top: 1px solid rgba(255,255,255,0.08);  /* nhẹ cho dark */
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.15);       /* phân tách logo/nav */
+  background-image: none !important;             /* chặn mọi bg image */
+}
+
+/* ========================
+   LIGHT / DARK THEMES
+=========================== */
+.navbar-light {
+  background-color:#f9f9f9 !important;
+  border-bottom:1px solid #dee2e6;
+  border-top:1px solid #ebc686;
+}
+.navbar-dark {
+  background-color:#121212 !important;
+  border-bottom:1px solid #333;
+}
+
+/* ========================
+   NAV LINKS
+=========================== */
+.navbar-nav .nav-link {
+  font-family:'Barlow Condensed', sans-serif;
+  font-weight:100;
+  letter-spacing:.02rem;
+  font-size:1.1rem;
+  text-transform:uppercase;
+  padding:.75rem 1rem;
+  transition: color .25s ease, transform .2s ease;
+  background:none !important;            /* tuyệt đối không gradient */
+  background-image:none !important;
+  -webkit-background-clip:unset !important;
+  -webkit-text-fill-color:unset !important;
+  text-shadow:none !important;
+  box-shadow:none !important;
+}
+.navbar-light .nav-link { color:#343a40 !important; }
+.navbar-dark  .nav-link { color:#ffffff !important; }
+
+/* Hover chung (trừ Liên hệ sẽ tắt transform ở dưới) */
+.navbar-nav .nav-link:hover,
+.navbar-nav .nav-link:focus {
+  color:#bfa16e !important;
+  transform: translateY(-1px);
+  text-decoration:none;
+}
+
+/* ========================
+   LOGO
+=========================== */
+.navbar-logo-img {
+  height:180px; max-width:100%; object-fit:contain;
+  margin-bottom:-64px; margin-top:-45px;
+}
+
+/* ========================
+   DROPDOWN
+=========================== */
+.nav-item.dropdown:hover .dropdown-menu { display:block; }
+
+.dropdown-menu{
+  transition:.3s ease;
+  border-radius:8px;
+  border:1px solid rgba(0,0,0,.06);
+  box-shadow:0 .5rem 1rem rgba(0,0,0,.08);
+  overflow:hidden;
+}
+.dropdown-menu .dropdown-item{
+  font-size:.86rem; text-transform:none; font-family:'Poppins', sans-serif;
+}
+.dropdown-menu .dropdown-item:hover{
+  background-color:rgba(191,161,110,.1);
+  color:#bfa16e;
+}
+
+/* Desktop hover offset */
+@media (min-width:992px){
+  .hover-dropdown:hover .dropdown-menu{ display:block; margin-top:.3rem; }
+}
+
+/* ========================
+   SEARCH FIELD
+=========================== */
+.input-group input.form-control-sm{
+  font-size:.8rem; padding:.35rem .5rem;
+}
+.input-group-text{
+  background-color:#bfa16e; color:#fff; border:none;
+}
+
+/* ========================
+   “LIÊN HỆ” – TẮT HOÀN TOÀN HIỆU ỨNG
+=========================== */
+.navbar .nav-link.contact-link,
+.navbar .nav-link.contact-link:hover,
+.navbar .nav-link.contact-link:focus,
+.navbar .nav-link.contact-link::before,
+.navbar .nav-link.contact-link::after{
+  background:none !important;
+  background-image:none !important;
+  -webkit-background-clip:unset !important;
+  -webkit-text-fill-color:unset !important;
+  text-shadow:none !important;
+  box-shadow:none !important;
+  filter:none !important;
+  transform:none !important;   /* không nhô lên khi hover */
+}
+
+/* Màu tĩnh cho “Liên hệ” theo mode */
+.navbar-dark  .nav-link.contact-link { color:#ffffff !important; }
+.navbar-light .nav-link.contact-link { color:#343a40 !important; }
+
+/* Nếu vẫn bị rule khác tác động, chốt thêm hover màu vàng nhưng KHÔNG transform: */
+.navbar .nav-link.contact-link:hover { color:#bfa16e !important; }
+/* ========================
+   LOGO (to hơn, an toàn responsive)
+=========================== */
+:root{
+  --logo-h-desktop: 260px;  /* chỉnh lên/xuống tùy ý (220–300px) */
+  --logo-h-tablet: 200px;
+  --logo-h-mobile: 64px;
+}
+
+/* thanh chứa logo (giữ mỏng nhưng không bóp ảnh) */
+.logo-bar{
+  line-height: 0;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+/* ảnh logo */
+.navbar-logo-img{
+  display:block;
+  height: var(--logo-h-desktop);
+  max-width: none;             /* tránh bị giới hạn theo container */
+  object-fit: contain;
+  /* Kéo chồng lên navbar dưới để không đội chiều cao tổng thể quá nhiều */
+  margin-top: -48px;
+  margin-bottom: -100px;
+}
+
+/* Tablet */
+@media (max-width: 991.98px){
+  .navbar-logo-img{
+    height: var(--logo-h-tablet);
+    margin-top: -52px;
+    margin-bottom: -68px;
+  }
+}
+
+/* Mobile */
+@media (max-width: 575.98px){
+  .navbar-logo-img{
+    height: var(--logo-h-mobile);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+}
