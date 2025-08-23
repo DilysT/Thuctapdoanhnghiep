@@ -27,6 +27,7 @@ import FashionKids from './pages/FashionKids';
 import AboutPage from './pages/AboutPage';
 import ScrollToTopButton from './components/ScrollToTopButton';
 
+import ServicesPartners from './pages/ServicesPartners.jsx';
 import SearchResults from './pages/SearchResults';
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/dich-vu-doi-tac" element={<ServicesPartners />} />
 
           {/* Bài viết cho sidebar */}
           <Route path="/bai-viet/phu-kien-thoi-trang-si" element={<PostPhuKienThoiTrangSi />} />

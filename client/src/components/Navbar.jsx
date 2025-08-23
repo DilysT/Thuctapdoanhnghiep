@@ -9,9 +9,16 @@ export default function Navbar() {
   const [q, setQ] = useState('');
   const [open, setOpen] = useState(false);
 
+  // --- NEW: điều khiển dropdown "Sản phẩm" với delay ---
+  const [prodOpen, setProdOpen] = useState(false);
+  const prodRef = useRef(null);
+  const prodTimer = useRef(null);
+  const OPEN_DELAY = 120;   // ms – mở hơi trễ 1 chút cho tự nhiên
+  const CLOSE_DELAY = 450;  // ms – GIỮ LÂU HƠN để người dùng kịp rê chuột
+
   const navigate = useNavigate();
 
-  // refs cho click-outside
+  // refs cho click-outside (search)
   const desktopRef = useRef(null);
   const mobileRef = useRef(null);
   const inputDesktopRef = useRef(null);
@@ -24,7 +31,7 @@ export default function Navbar() {
     document.body.style.color = darkMode ? '#ffffff' : '#212529';
   }, [darkMode]);
 
-  // Gợi ý search (match theo title + keywords), giới hạn 6
+  // Gợi ý search
   const suggestions = useMemo(() => {
     const s = q.trim().toLowerCase();
     if (!s) return [];
@@ -50,18 +57,32 @@ export default function Navbar() {
       goSearch();
     } else if (e.key === 'Escape') {
       setOpen(false);
+      setProdOpen(false);
     }
   };
 
-  // click outside để đóng gợi ý
+  // click outside để đóng gợi ý + đóng dropdown Sản phẩm
   useEffect(() => {
     const handleClick = (e) => {
       if (desktopRef.current && !desktopRef.current.contains(e.target)) setOpen(false);
       if (mobileRef.current  && !mobileRef.current.contains(e.target))  setOpen(false);
+      if (prodRef.current    && !prodRef.current.contains(e.target))    setProdOpen(false);
     };
     document.addEventListener('mousedown', handleClick);
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
+
+  // --- NEW: handler hover có delay ---
+  const prodEnter = () => {
+    clearTimeout(prodTimer.current);
+    prodTimer.current = setTimeout(() => setProdOpen(true), OPEN_DELAY);
+  };
+  const prodLeave = () => {
+    clearTimeout(prodTimer.current);
+    prodTimer.current = setTimeout(() => setProdOpen(false), CLOSE_DELAY);
+  };
+
+  useEffect(() => () => clearTimeout(prodTimer.current), []);
 
   return (
     <>
@@ -69,7 +90,7 @@ export default function Navbar() {
       <div className={`logo-bar py-3 ${darkMode ? 'bg-dark' : 'bg-light'}`}>
         <div className="container d-flex justify-content-center">
           <Link to="/" className="text-decoration-none">
-            <img src="/TS2.png" alt="Logo" className="navbar-logo-img" />
+            <img src="/ts.png" alt="Logo" className="navbar-logo-img" />
           </Link>
         </div>
       </div>
@@ -87,19 +108,16 @@ export default function Navbar() {
             position: relative;
             display: flex; align-items: center; gap: .45rem;
             border-radius: 999px;
-            padding: .34rem .42rem .34rem 0rem;
-            width: 190px;                       /* << nhỏ gọn */
+            padding: .38rem .42rem .34rem .8rem;
+            width: 190px;
             border: 1px solid transparent;
             transition: box-shadow .2s ease, border-color .2s ease, background .2s ease;
           }
-          .search-input {
-            border: none; outline: none; background: transparent;
-            width: 100%; font-size: .92rem;
-          }
+          .search-input { border: none; outline: none; background: transparent; width: 100%; font-size: .92rem; }
           .search-btn {
             width: 34px; height: 34px; border-radius: 999px; border: 0; outline: 0;
-            display:flex; align-items:center; justify-content:center;
-            cursor:pointer; transition: transform .15s ease, box-shadow .2s ease;
+            display:flex; align-items:center; justify-content:center; cursor:pointer;
+            transition: transform .15s ease, box-shadow .2s ease;
           }
           .search-btn:active { transform: translateY(1px); }
 
@@ -162,19 +180,40 @@ export default function Navbar() {
               <li className="nav-item">
                 <Link className="nav-link text-uppercase" to="/">Trang chủ</Link>
               </li>
+
+              {/* Sản phẩm – mở/đóng bằng state, có delay */}
+              <li
+                className={`nav-item dropdown ${prodOpen ? 'show' : ''}`}
+                ref={prodRef}
+                onMouseEnter={prodEnter}
+                onMouseLeave={prodLeave}
+              >
+                <span
+                  className="nav-link dropdown-toggle text-uppercase"
+                  role="button"
+                  aria-expanded={prodOpen}
+                  // mobile/desktop click đều toggle được
+                  onClick={() => setProdOpen(v => !v)}
+                >
+                  Sản phẩm
+                </span>
+                <ul className={`dropdown-menu ${prodOpen ? 'show' : ''}`}>
+                  <li><Link className="dropdown-item" to="/thoi-trang-nam" onClick={() => setProdOpen(false)}>Thời trang nam</Link></li>
+                  <li><Link className="dropdown-item" to="/thoi-trang-nu" onClick={() => setProdOpen(false)}>Thời trang nữ</Link></li>
+                  <li><Link className="dropdown-item" to="/thoi-trang-tre-em" onClick={() => setProdOpen(false)}>Thời trang trẻ em</Link></li>
+                </ul>
+              </li>
+
+              {/* Giới thiệu */}
               <li className="nav-item">
                 <Link className="nav-link text-uppercase" to="/gioi-thieu">Giới thiệu</Link>
               </li>
 
-              <li className="nav-item dropdown hover-dropdown">
-                <span className="nav-link dropdown-toggle text-uppercase" role="button" data-bs-toggle="dropdown">
-                  Sản phẩm
-                </span>
-                <ul className="dropdown-menu">
-                  <li><Link className="dropdown-item" to="/thoi-trang-nam">Thời trang nam</Link></li>
-                  <li><Link className="dropdown-item" to="/thoi-trang-nu">Thời trang nữ</Link></li>
-                  <li><Link className="dropdown-item" to="/thoi-trang-tre-em">Thời trang trẻ em</Link></li>
-                </ul>
+              {/* Dịch vụ & Đối tác */}
+              <li className="nav-item">
+                <Link className="nav-link text-uppercase" to="/dich-vu-doi-tac">
+                  Dịch vụ &amp; Đối tác
+                </Link>
               </li>
 
               <li className="nav-item">
@@ -182,7 +221,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* Menu phải (Liên hệ + Dark + Search sát phải) */}
+            {/* Menu phải (Liên hệ + Dark + Search) */}
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
               <li className="nav-item">
                 <Link className="nav-link text-uppercase contact-link" to="/contact">Liên hệ</Link>
@@ -194,7 +233,7 @@ export default function Navbar() {
                 </button>
               </li>
 
-              {/* Search (đặt CUỐI CÙNG -> sát góc phải) */}
+              {/* Search (desktop) */}
               <li className="nav-item d-none d-md-block position-relative" ref={desktopRef}>
                 <div className="search-pill">
                   <i className="bi bi-search" aria-hidden="true"></i>
@@ -231,7 +270,7 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* Search cho mobile (full width trong menu sập) */}
+            {/* Search mobile */}
             <div className="w-100 d-md-none mt-2" ref={mobileRef}>
               <div className="input-group">
                 <input
