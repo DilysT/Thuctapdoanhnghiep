@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { getProductsByCategory } from "../services/products";
-import { stripHtml } from "../utils/text";
+import { getProductsByCategory } from "../../services/products";
+import { stripHtml } from "../../utils/text";
 
 const PLACEHOLDER = "https://via.placeholder.com/800x500?text=No+Image";
 
@@ -14,7 +14,7 @@ export default function FashionKids() {
     (async () => {
       try {
         setLoading(true);
-        const data = await getProductsByCategory(2); // Nữ
+        const data = await getProductsByCategory(3); // Trẻ em
         const mapped = (Array.isArray(data) ? data : []).map((p) => ({
           id: p.id,
           title: p.name || "",

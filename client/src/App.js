@@ -20,9 +20,9 @@ import PostXuongSiDongHoUyTin from './pages/PostDetail/PostXuongSiDongHoUyTin';
 import PostXuHuongGioiTre2024 from './pages/PostDetail/PostXuHuongGioiTre2024';
 
 import AllPosts from './pages/AllPosts';
-import FashionMen from './pages/FashionMen';
-import FashionWomen from './pages/FashionWomen';
-import FashionKids from './pages/FashionKids';
+import FashionMen from './pages/Product_list/FashionMen';
+import FashionWomen from './pages/Product_list/FashionWomen';
+import FashionKids from './pages/Product_list/FashionKids';
 
 import AboutPage from './pages/AboutPage';
 import ScrollToTopButton from './components/ScrollToTopButton';

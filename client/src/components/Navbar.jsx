@@ -181,6 +181,12 @@ export default function Navbar() {
                 <Link className="nav-link text-uppercase" to="/">Trang chủ</Link>
               </li>
 
+
+              {/* Giới thiệu */}
+              <li className="nav-item">
+                <Link className="nav-link text-uppercase" to="/gioi-thieu">Giới thiệu</Link>
+              </li>
+
               {/* Sản phẩm – mở/đóng bằng state, có delay */}
               <li
                 className={`nav-item dropdown ${prodOpen ? 'show' : ''}`}
@@ -204,10 +210,6 @@ export default function Navbar() {
                 </ul>
               </li>
 
-              {/* Giới thiệu */}
-              <li className="nav-item">
-                <Link className="nav-link text-uppercase" to="/gioi-thieu">Giới thiệu</Link>
-              </li>
 
               {/* Dịch vụ & Đối tác */}
               <li className="nav-item">
@@ -221,8 +223,13 @@ export default function Navbar() {
               </li>
             </ul>
 
-            {/* Menu phải (Liên hệ + Dark + Search) */}
+            {/* Menu phải (Tuyển dụng + Liên hệ + Dark + Search) */}
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
+              {/* NEW: TUYỂN DỤNG – đặt TRƯỚC "Liên hệ" */}
+              <li className="nav-item">
+                <Link className="nav-link text-uppercase" to="/tuyen-dung">Tuyển dụng</Link>
+              </li>
+
               <li className="nav-item">
                 <Link className="nav-link text-uppercase contact-link" to="/contact">Liên hệ</Link>
               </li>

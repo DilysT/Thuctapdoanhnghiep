@@ -1,7 +1,7 @@
 // src/pages/HomePage.jsx
 import React, { useEffect, useMemo, useState } from 'react';
 import HeroBanner from '../components/HeroBanner';
-
+import  workplace from '../assets/workplace/workplace1.jpg';
 // Hình demo cho section giới thiệu
 import hero3 from '../assets/hero3.jpg';
 import shipping from '../assets/shipping.webp';
@@ -555,7 +555,7 @@ export default function HomePage() {
           <div className="row gy-4 align-items-center">
             <div className="col-12 col-lg-5">
               <div className="ratio ratio-4x3">
-                <img src={hero3} alt="Hình minh họa" className="w-100 h-100 rounded-2" style={{ objectFit: 'cover' }} />
+                <img src={workplace} alt="Hình minh họa" className="w-100 h-100 rounded-2" style={{ objectFit: 'cover' }} />
               </div>
             </div>
 
