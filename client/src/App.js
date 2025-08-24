@@ -20,13 +20,14 @@ import PostXuongSiDongHoUyTin from './pages/PostDetail/PostXuongSiDongHoUyTin';
 import PostXuHuongGioiTre2024 from './pages/PostDetail/PostXuHuongGioiTre2024';
 
 import AllPosts from './pages/AllPosts';
-import FashionMen from './pages/FashionMen';
-import FashionWomen from './pages/FashionWomen';
-import FashionKids from './pages/FashionKids';
+import FashionMen from './pages/Product_list/FashionMen';
+import FashionWomen from './pages/Product_list/FashionWomen';
+import FashionKids from './pages/Product_list/FashionKids';
 
 import AboutPage from './pages/AboutPage';
 import ScrollToTopButton from './components/ScrollToTopButton';
 
+import ServicesPartners from './pages/ServicesPartners.jsx';
 import SearchResults from './pages/SearchResults';
 function App() {
   return (
@@ -35,6 +36,7 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/dich-vu-doi-tac" element={<ServicesPartners />} />
 
           {/* Bài viết cho sidebar */}
           <Route path="/bai-viet/phu-kien-thoi-trang-si" element={<PostPhuKienThoiTrangSi />} />

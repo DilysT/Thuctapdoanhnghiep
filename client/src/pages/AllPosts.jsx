@@ -26,7 +26,7 @@ export default function AllPosts() {
     { title: 'Quần áo bị lỗ kim? Đã có cách khắc phục!', date: '10/02/2024', excerpt: 'Nguyên nhân, cách xử lý theo chất liệu và mẹo phòng tránh.', link: '/bai-viet/lo-kim-quan-ao', img: lokim, tag: 'Mẹo hay' },
     { title: 'Top 10 xưởng sỉ đồng hồ uy tín, chất lượng hiện nay', date: '18/01/2024', excerpt: 'Tiêu chí chọn xưởng, hồ sơ kỹ thuật và chính sách bảo hành.', link: '/bai-viet/xuong-si-dong-ho-uy-tin', img: watch, tag: 'Nguồn hàng' },
     { title: 'Xu hướng ăn mặc của giới trẻ 2024: phong cách nào đang thịnh hành?', date: '02/06/2024', excerpt: 'Tối giản nâng cấp, Y2K thực dụng và athleisure lên ngôi.', link: '/bai-viet/xu-huong-gioi-tre-2024', img: teen, tag: 'Xu hướng' },
-    { title: 'Áo kiểu tay bồng nơ eo', date: '15/09/2025', excerpt: 'Thanh lịch cho công sở & dự tiệc.', link: '/bai-viet/victoria-secret-2025', img: blouse2, tag: 'Sự kiện' },
+    { title: 'Áo kiểu tay bồng nơ eo', date: '15/09/2025', excerpt: 'Thanh lịch cho công sở & dự tiệc.', link: '/bai-viet/victoria-secret-2024', img: blouse2, tag: 'Sự kiện' },
     { title: 'Áo nam Thu – Đông: gợi ý phối đồ', date: '12/10/2024', excerpt: 'Chọn chất liệu và layer ấm áp cho mùa Thu–Đông.', link: '/bai-viet/ao-nam-thu-dong', img: aonam, tag: 'Phong cách' },
     { title: 'Loewe Men Xuân – Hè 2025', date: '02/11/2024', excerpt: '“Bảo tàng nghệ thuật” thu nhỏ trên sàn diễn Loewe.', link: '/bai-viet/loewe-xuan-he-2025', img: lowoeCamel, tag: 'Sự kiện' },
   ];

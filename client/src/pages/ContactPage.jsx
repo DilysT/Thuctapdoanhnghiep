@@ -185,34 +185,34 @@ export default function ContactPage() {
             <form onSubmit={onSubmit}>
               <div className="form-row">
                 <div className="group">
-                  <label className="label">Name</label>
-                  <input className="input" name="name" type="text" placeholder="John Smith" required />
+                  <label className="label">Tên khách hàng</label>
+                  <input className="input" name="Tên" type="text" placeholder="Tên của bạn" required />
                 </div>
                 <div className="group">
                   <label className="label">Email</label>
-                  <input className="input" name="email" type="email" placeholder="hello@email.com" required />
+                  <input className="input" name="email" type="email" placeholder="Email của bạn" required />
                 </div>
               </div>
 
               <div className="form-row">
                 <div className="group">
-                  <label className="label">Company</label>
-                  <input className="input" name="company" type="text" placeholder="Công Ty ABC" required />
+                  <label className="label">Công ty</label>
+                  <input className="input" name="Tên công ty" type="text" placeholder="Công Ty ABC" required />
                 </div>
                 <div className="group">
-                  <label className="label">Phone</label>
+                  <label className="label">Số điện thoại</label>
                   <input className="input" name="phone" type="tel" placeholder="0xxxxxxxx" required />
                 </div>
               </div>
 
               <div className="group">
-                <label className="label">Message</label>
+                <label className="label">Lời nhắn</label>
                 <textarea className="input" name="message" placeholder="Viết lời nhắn tại đây..." required />
               </div>
 
               <div className="actions">
                 <button className="btn" type="submit" disabled={submitting}>
-                  {submitting ? "Đang gửi..." : "Send Message"}
+                  {submitting ? "Đang gửi..." : "Gửi thông tin"}
                 </button>
                 <span style={{ color: "var(--muted)" }}>Hoặc email trực tiếp cho chúng tôi.</span>
               </div>
