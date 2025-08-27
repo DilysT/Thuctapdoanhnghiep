@@ -21,7 +21,7 @@ export default function ContactPage() {
 
     setSubmitting(true);
     try {
-      await createQuote(payload);          // ⬅️ gọi API qua service
+      await createQuote(payload);          // gọi API qua service
       formEl.reset();
       setSent(true);
       setTimeout(() => setSent(false), 2800);
