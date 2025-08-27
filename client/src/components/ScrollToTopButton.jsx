@@ -47,7 +47,7 @@ export default function ScrollToTopButton() {
           box-shadow: 0 8px 18px rgba(0, 104, 255, 0.35), inset 0 -2px 0 rgba(0,0,0,.08);
         }
         .ts-phone{ 
-          background: linear-gradient(135deg, #bfa16e, #d4b98c);
+          background: linear-gradient(135deg, #75bf6eff, #07b11dff);
           box-shadow: 0 8px 18px rgba(191, 161, 110, 0.35), inset 0 -2px 0 rgba(0,0,0,.08);
         }
         .ts-top{ 

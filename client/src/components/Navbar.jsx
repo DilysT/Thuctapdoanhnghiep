@@ -3,22 +3,26 @@ import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import './styles/Navbar.css';
 import searchIndex from '../data/searchIndex';
+import { useI18n } from '../utils/i18n';
 
 export default function Navbar() {
   const [darkMode, setDarkMode] = useState(true);
   const [q, setQ] = useState('');
   const [open, setOpen] = useState(false);
 
-  // --- NEW: điều khiển dropdown "Sản phẩm" với delay ---
+  // --- Dropdown "Sản phẩm" có delay ---
   const [prodOpen, setProdOpen] = useState(false);
   const prodRef = useRef(null);
   const prodTimer = useRef(null);
-  const OPEN_DELAY = 120;   // ms – mở hơi trễ 1 chút cho tự nhiên
-  const CLOSE_DELAY = 450;  // ms – GIỮ LÂU HƠN để người dùng kịp rê chuột
+  const OPEN_DELAY = 120;
+  const CLOSE_DELAY = 450;
 
   const navigate = useNavigate();
 
-  // refs cho click-outside (search)
+  // i18n
+  const { t, lang, setLang } = useI18n();
+
+  // refs click-outside (search)
   const desktopRef = useRef(null);
   const mobileRef = useRef(null);
   const inputDesktopRef = useRef(null);
@@ -61,7 +65,7 @@ export default function Navbar() {
     }
   };
 
-  // click outside để đóng gợi ý + đóng dropdown Sản phẩm
+  // click outside
   useEffect(() => {
     const handleClick = (e) => {
       if (desktopRef.current && !desktopRef.current.contains(e.target)) setOpen(false);
@@ -72,7 +76,7 @@ export default function Navbar() {
     return () => document.removeEventListener('mousedown', handleClick);
   }, []);
 
-  // --- NEW: handler hover có delay ---
+  // hover delay
   const prodEnter = () => {
     clearTimeout(prodTimer.current);
     prodTimer.current = setTimeout(() => setProdOpen(true), OPEN_DELAY);
@@ -81,7 +85,6 @@ export default function Navbar() {
     clearTimeout(prodTimer.current);
     prodTimer.current = setTimeout(() => setProdOpen(false), CLOSE_DELAY);
   };
-
   useEffect(() => () => clearTimeout(prodTimer.current), []);
 
   return (
@@ -97,13 +100,10 @@ export default function Navbar() {
 
       {/* NAVBAR CHÍNH */}
       <nav
-        className={`navbar navbar-expand-lg py-2 ${
-          darkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'
-        } shadow-sm`}
+        className={`navbar navbar-expand-lg py-2 ${darkMode ? 'navbar-dark bg-dark' : 'navbar-light bg-light'} shadow-sm`}
         style={{ zIndex: 1030, position: 'sticky' }}
       >
         <style>{`
-          /* ===== Search pill (desktop) ===== */
           .search-pill {
             position: relative;
             display: flex; align-items: center; gap: .45rem;
@@ -121,7 +121,6 @@ export default function Navbar() {
           }
           .search-btn:active { transform: translateY(1px); }
 
-          /* suggestions */
           .search-suggest {
             position:absolute; right:0; top: calc(100% + .3rem);
             width: min(340px, 86vw);
@@ -131,7 +130,6 @@ export default function Navbar() {
           .search-suggest .dropdown-item:hover { background: rgba(191,161,110,.12); color: #bfa16e; }
           .search-suggest .view-all { font-weight: 600; }
 
-          /* Light/Dark cho pill + suggestions */
           @media (prefers-color-scheme: light){
             .search-pill { background:#fff; border-color: rgba(0,0,0,.08); box-shadow: 0 6px 16px rgba(0,0,0,.08); }
             .search-pill:focus-within { box-shadow: 0 10px 22px rgba(0,0,0,.12); border-color: rgba(13,110,253,.22); }
@@ -147,7 +145,6 @@ export default function Navbar() {
             .search-suggest .dropdown-item { color:#fff; }
           }
 
-          /* Loại mọi overlay/shine ở Liên hệ */
           .nav-link.contact-link,
           .nav-link.contact-link:hover,
           .nav-link.contact-link:focus,
@@ -178,16 +175,14 @@ export default function Navbar() {
             {/* Menu trái */}
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <Link className="nav-link text-uppercase" to="/">Trang chủ</Link>
+                <Link className="nav-link text-uppercase" to="/">{t('home')}</Link>
               </li>
 
-
-              {/* Giới thiệu */}
               <li className="nav-item">
-                <Link className="nav-link text-uppercase" to="/gioi-thieu">Giới thiệu</Link>
+                <Link className="nav-link text-uppercase" to="/gioi-thieu">{t('about')}</Link>
               </li>
 
-              {/* Sản phẩm – mở/đóng bằng state, có delay */}
+              {/* Products */}
               <li
                 className={`nav-item dropdown ${prodOpen ? 'show' : ''}`}
                 ref={prodRef}
@@ -198,44 +193,61 @@ export default function Navbar() {
                   className="nav-link dropdown-toggle text-uppercase"
                   role="button"
                   aria-expanded={prodOpen}
-                  // mobile/desktop click đều toggle được
                   onClick={() => setProdOpen(v => !v)}
                 >
-                  Sản phẩm
+                  {t('products')}
                 </span>
                 <ul className={`dropdown-menu ${prodOpen ? 'show' : ''}`}>
-                  <li><Link className="dropdown-item" to="/thoi-trang-nam" onClick={() => setProdOpen(false)}>Thời trang nam</Link></li>
-                  <li><Link className="dropdown-item" to="/thoi-trang-nu" onClick={() => setProdOpen(false)}>Thời trang nữ</Link></li>
-                  <li><Link className="dropdown-item" to="/thoi-trang-tre-em" onClick={() => setProdOpen(false)}>Thời trang trẻ em</Link></li>
+                  <li><Link className="dropdown-item" to="/thoi-trang-nam" onClick={() => setProdOpen(false)}>{t('men')}</Link></li>
+                  <li><Link className="dropdown-item" to="/thoi-trang-nu" onClick={() => setProdOpen(false)}>{t('women')}</Link></li>
+                  <li><Link className="dropdown-item" to="/thoi-trang-tre-em" onClick={() => setProdOpen(false)}>{t('kids')}</Link></li>
                 </ul>
               </li>
 
-
-              {/* Dịch vụ & Đối tác */}
               <li className="nav-item">
                 <Link className="nav-link text-uppercase" to="/dich-vu-doi-tac">
-                  Dịch vụ &amp; Đối tác
+                  {t('partners')}
                 </Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link text-uppercase" to="/bai-viet">Bài viết</Link>
+                <Link className="nav-link text-uppercase" to="/bai-viet">{t('posts')}</Link>
               </li>
             </ul>
 
-            {/* Menu phải (Tuyển dụng + Liên hệ + Dark + Search) */}
+            {/* Menu phải */}
             <ul className="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
-              {/* NEW: TUYỂN DỤNG – đặt TRƯỚC "Liên hệ" */}
               <li className="nav-item">
-                <Link className="nav-link text-uppercase" to="/tuyen-dung">Tuyển dụng</Link>
+                <Link className="nav-link text-uppercase" to="/tuyen-dung">{t('careers')}</Link>
               </li>
 
               <li className="nav-item">
-                <Link className="nav-link text-uppercase contact-link" to="/contact">Liên hệ</Link>
+                <Link className="nav-link text-uppercase contact-link" to="/contact">{t('contact')}</Link>
               </li>
 
+              {/* Language switcher */}
+              <li className="nav-item dropdown">
+                <button
+                  className="btn nav-link dropdown-toggle text-uppercase"
+                  id="langDropdown"
+                  data-bs-toggle="dropdown"
+                  aria-expanded="false"
+                >
+                  {lang.toUpperCase()}
+                </button>
+                <ul className="dropdown-menu dropdown-menu-end" aria-labelledby="langDropdown">
+                  <li>
+                    <button className="dropdown-item" onClick={() => setLang('vi')}>VI — Tiếng Việt</button>
+                  </li>
+                  <li>
+                    <button className="dropdown-item" onClick={() => setLang('en')}>EN — English</button>
+                  </li>
+                </ul>
+              </li>
+
+              {/* Theme toggle */}
               <li className="nav-item">
-                <button className="btn nav-link" onClick={() => setDarkMode(!darkMode)} aria-label="Đổi giao diện">
+                <button className="btn nav-link" onClick={() => setDarkMode(!darkMode)} aria-label={t('themeToggle')}>
                   <i className={`bi ${darkMode ? 'bi-sun' : 'bi-moon'} text-warning`}></i>
                 </button>
               </li>
@@ -248,19 +260,18 @@ export default function Navbar() {
                     ref={inputDesktopRef}
                     type="text"
                     className="search-input"
-                    placeholder="Tìm kiếm…"
+                    placeholder={t('searchPlaceholder')}
                     value={q}
                     onChange={(e) => { setQ(e.target.value); setOpen(true); }}
                     onKeyDown={onKeyDown}
                     onFocus={() => q.trim() && setOpen(true)}
-                    aria-label="Tìm kiếm"
+                    aria-label={t('searchPlaceholder')}
                   />
                   <button className="search-btn" type="button" onClick={goSearch} aria-label="Tìm">
                     <i className="bi bi-arrow-right-short fs-5"></i>
                   </button>
                 </div>
 
-                {/* Gợi ý desktop */}
                 {open && q.trim() && suggestions.length > 0 && (
                   <div className="search-suggest dropdown-menu show">
                     {suggestions.map((sug, i) => (
@@ -270,7 +281,7 @@ export default function Navbar() {
                     ))}
                     <div className="dropdown-divider"></div>
                     <button className="dropdown-item view-all" onClick={goSearch}>
-                      Xem tất cả kết quả cho “{q}”
+                      {t('viewAll', q)}
                     </button>
                   </div>
                 )}
@@ -283,7 +294,7 @@ export default function Navbar() {
                 <input
                   type="text"
                   className="form-control"
-                  placeholder="Tìm kiếm…"
+                  placeholder={t('searchPlaceholder')}
                   value={q}
                   onChange={(e) => { setQ(e.target.value); setOpen(true); }}
                   onKeyDown={onKeyDown}
@@ -302,7 +313,7 @@ export default function Navbar() {
                   ))}
                   <div className="dropdown-divider"></div>
                   <button className="dropdown-item view-all" onClick={goSearch}>
-                    Xem tất cả kết quả cho “{q}”
+                    {t('viewAll', q)}
                   </button>
                 </div>
               )}
