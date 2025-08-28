@@ -74,7 +74,7 @@ export default function Sidebar() {
         <h6 className="mb-2 fw-bold">Theo dõi</h6>
         <hr className="border-light" />
         <div className="bg-warning text-dark p-2 rounded small">
-          Go to the Arqam options page to set your social accounts.
+          Vui lòng liên hệ với chúng tôi để được tư vấn và hợp tác:
         </div>
       </div>
 
