@@ -293,7 +293,7 @@ export default function HeroBannerManager() {
                       name="image_url"
                       value={form.image_url}
                       onChange={onChange}
-                      placeholder="https://... hoặc http://localhost:3000/uploads/..."
+                      placeholder="https://... hoặc https://be-ttdn.onrender.com/uploads/..."
                       className={`${inputCls} ${
                         invalid("image_url") ? "border-red-400 ring-2 ring-red-200" : ""
                       }`}

@@ -1,77 +1,59 @@
-// client/src/components/HeroBanner.jsx
-import React, { useEffect, useMemo, useState } from "react";
-import { Link } from "react-router-dom";
-import "./styles/HeroBanner.css";
-import { fetchBanners } from "../services/banners";
-import heroBg from "../assets/hero1.jpg";
+import React from 'react';
+import { Link } from 'react-router-dom';
+import './styles/HeroBanner.css';
 
-const MAX_SLOTS = 3;
+// ảnh nền chính
+import hero1 from '../assets/hero1.jpg';
 
-function formatDate(iso) {
-  if (!iso) return "";
-  const d = new Date(iso);
-  if (Number.isNaN(d)) return "";
-  return d.toLocaleDateString("en-US", {
-    month: "long",
-    day: "numeric",
-    year: "numeric",
-  });
-}
+// 3 ảnh bạn muốn dùng
+import blouse2 from '../assets/banner1/blouse.jpg';
+import aonam from '../assets/banner1/aonam.webp';
+import lowoeCamel from '../assets/banner1/lowoe2.webp';
+
+const posts = [
+  {
+    id: 1,
+    title: 'Áo kiểu tay bồng nơ eo – Trắng: Thanh lịch cho công sở & dự tiệc',
+    date: 'January 21, 2025',
+    image: blouse2,
+    link: '/bai-viet/victoria-secret-2024',
+    teaser: 'Chất liệu mềm rũ, tôn dáng – phối quần âu hay chân váy đều ổn.',
+  },
+  {
+    id: 2,
+    title: 'Áo dài nam Thu–Đông gấm jacquard: Lịch lãm cho lễ Tết, sự kiện & doanh nghiệp',
+    date: 'September 6, 2025',
+    image: aonam,
+    link: '/bai-viet/ao-nam-thu-dong',
+    teaser: 'Phom đứng, hoạ tiết jacquard tinh tế – lên ảnh cực sang.',
+  },
+  {
+    id: 3,
+    title: 'Loewe Men Xuân-Hè 2025: 3 key look từ sàn diễn đến đời thường',
+    date: 'February 2, 2025',
+    image: lowoeCamel,
+    link: '/bai-viet/loewe-xuan-he-2025',
+    teaser: 'Gam màu camel – tối giản nhưng chi tiết rất “đắt”.',
+  },
+];
 
 export default function HeroBanner() {
-  const [items, setItems] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [err, setErr] = useState("");
-
-  useEffect(() => {
-    (async () => {
-      try {
-        setLoading(true);
-        const data = await fetchBanners();
-
-        const mapped = (Array.isArray(data) ? data : [])
-          .filter((b) => b && b.image_url && b.is_active !== false)
-          .sort((a, b) => {
-            const pa = a.position ?? 999,
-              pb = b.position ?? 999;
-            if (pa !== pb) return pa - pb;
-            return (a.id || 0) - (b.id || 0);
-          })
-          .slice(0, MAX_SLOTS)
-          .map((b) => ({
-            id: b.id,
-            title: b.title || "",
-            image: b.image_url || "",
-            link: b.link_url || "#",
-            updatedAt: b.updated_at || b.created_at || "",
-            date: formatDate(b.created_at || b.updated_at),
-          }));
-
-        setItems(mapped);
-      } catch (e) {
-        setErr(e?.message || "Không tải được banner");
-      } finally {
-        setLoading(false);
-      }
-    })();
-  }, []);
-
-  const bgImage = useMemo(() => {
-    const envUrl = process.env.REACT_APP_HERO_BG_URL;
-    return envUrl && /^https?:\/\//i.test(envUrl) ? envUrl : heroBg;
-  }, []);
-
   return (
-    <div className="hero-banner text-white">
-      {/* Guard: chỉ nền bị cắt, cards không bị cắt */}
-      <div className="hero-bg-guard">
-        <div className="hero-background">
-          <img src={bgImage} alt="" className="hero-bg-img" />
-        </div>
-        <div className="hero-bg-overlay" />
-      </div>
-
-      <div className="hero-inner container-fluid py-5">
+    <div className="hero-banner position-relative text-white">
+      {/* Background lớn mờ */}
+      <div
+        className="hero-background"
+        style={{
+          backgroundImage: `url(${hero1})`,
+          backgroundSize: 'cover',
+          backgroundRepeat: 'no-repeat',
+          backgroundPosition: 'center',
+          zIndex: 0,
+          opacity: 0.6,
+        }}
+      />
+      <div className="container-fluid position-relative z-2 py-5">
+        {/* Tiêu đề chung */}
         <div className="text-center mb-5">
           <h2 className="fw-bold">
             Thời trang giá sỉ – Nguồn hàng thời trang đa dạng, giá cả cạnh tranh
@@ -82,69 +64,31 @@ export default function HeroBanner() {
           </p>
         </div>
 
-        {err && <div className="alert alert-danger">{err}</div>}
-
+        {/* Card 3 banner */}
         <div className="row g-4">
-          {items.map((post) => {
-            if (!post.image) return null;
-
-            const thumb = post.updatedAt
-              ? post.image +
-                (post.image.includes("?") ? "&" : "?") +
-                "v=" +
-                encodeURIComponent(post.updatedAt)
-              : post.image;
-
-            const isExternal = /^https?:\/\//i.test(post.link || "");
-            const Wrap = ({ children }) =>
-              isExternal ? (
-                <a
-                  href={post.link}
-                  className="hero-card text-white text-decoration-none d-block h-100"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  {children}
-                </a>
-              ) : (
-                <Link
-                  to={post.link || "#"}
-                  className="hero-card text-white text-decoration-none d-block h-100"
-                >
-                  {children}
-                </Link>
-              );
-
-            return (
-              <div key={post.id} className="col-12 col-md-4">
-                <Wrap>
-                  <div className="hero-img-wrapper">
-                    <img
-                      src={thumb}
-                      alt={post.title || "banner"}
-                      className="hero-img"
-                    />
-                    {(post.title || post.date) && (
-                      <div className="hero-overlay">
-                        {post.date && (
-                          <span className="hero-date-badge">{post.date}</span>
-                        )}
-                        {post.title && (
-                          <h5 className="hero-title">{post.title}</h5>
-                        )}
-                      </div>
+          {posts.map((post) => (
+            <div key={post.id} className="col-12 col-md-4">
+              <Link
+                to={post.link}
+                className="hero-card text-white text-decoration-none d-block h-100"
+              >
+                <div className="hero-img-wrapper">
+                  <img src={post.image} alt={post.title} className="hero-img" />
+                  <div className="hero-overlay">
+                    {/* Phần đứng yên ở trên */}
+                    <div className="hero-meta">
+                      <p className="hero-date">{post.date}</p>
+                      <h5 className="hero-title">{post.title}</h5>
+                    </div>
+                    {/* Teaser: chỉ trồi lên khi hover */}
+                    {post.teaser && (
+                      <p className="hero-teaser">{post.teaser}</p>
                     )}
                   </div>
-                </Wrap>
-              </div>
-            );
-          })}
-
-          {!loading && items.length === 0 && (
-            <div className="col-12 text-center text-muted">
-              Chưa có banner nào.
+                </div>
+              </Link>
             </div>
-          )}
+          ))}
         </div>
       </div>
     </div>
