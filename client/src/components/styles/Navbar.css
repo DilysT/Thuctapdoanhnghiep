@@ -8,15 +8,15 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
    NAVBAR BASE
 =========================== */
 .navbar {
-  position: -webkit-sticky; /* Safari */
+  position: -webkit-sticky;
   position: sticky;
   top: 0;
   z-index: 1050;
   padding-top:.3rem !important;
   padding-bottom:.3rem !important;
-  border-top: 1px solid rgba(255,255,255,0.08);  /* nhẹ cho dark */
-  box-shadow: 0 -1px 5px rgba(0,0,0,0.15);       /* phân tách logo/nav */
-  background-image: none !important;             /* chặn mọi bg image */
+  border-top: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 -1px 5px rgba(0,0,0,0.15);
+  background-image: none !important;
 }
 
 /* ========================
@@ -43,7 +43,7 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
   text-transform:uppercase;
   padding:.75rem 1rem;
   transition: color .25s ease, transform .2s ease;
-  background:none !important;            /* tuyệt đối không gradient */
+  background:none !important;
   background-image:none !important;
   -webkit-background-clip:unset !important;
   -webkit-text-fill-color:unset !important;
@@ -53,7 +53,6 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
 .navbar-light .nav-link { color:#343a40 !important; }
 .navbar-dark  .nav-link { color:#ffffff !important; }
 
-/* Hover chung (trừ Liên hệ sẽ tắt transform ở dưới) */
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link:focus {
   color:#bfa16e !important;
@@ -62,11 +61,45 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
 }
 
 /* ========================
-   LOGO
+   LOGO BAR (ẩn trên mobile để khỏi bị 2 logo)
 =========================== */
-.navbar-logo-img {
-  height:180px; max-width:100%; object-fit:contain;
-  margin-bottom:-64px; margin-top:-45px;
+:root{
+  --logo-h-desktop: 260px;
+  --logo-h-tablet: 200px;
+  --logo-h-mobile: 64px;
+}
+
+.logo-bar{
+  line-height: 0;
+  padding-top: .25rem;
+  padding-bottom: .25rem;
+}
+
+/* ảnh logo lớn trên desktop/tablet */
+.navbar-logo-img{
+  display:block;
+  height: var(--logo-h-desktop);
+  max-width: none;
+  object-fit: contain;
+  margin-top: -48px;
+  margin-bottom: -100px;
+}
+
+@media (max-width: 991.98px){
+  .navbar-logo-img{
+    height: var(--logo-h-tablet);
+    margin-top: -52px;
+    margin-bottom: -68px;
+  }
+}
+
+@media (max-width: 575.98px){
+  /* Trên mobile: ẩn logo-bar nên không cần kéo đè */
+  .navbar-logo-img{
+    height: var(--logo-h-mobile);
+    margin-top: 0;
+    margin-bottom: 0;
+  }
 }
 
 /* ========================
@@ -89,7 +122,6 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
   color:#bfa16e;
 }
 
-/* Desktop hover offset */
 @media (min-width:992px){
   .hover-dropdown:hover .dropdown-menu{ display:block; margin-top:.3rem; }
 }
@@ -103,9 +135,48 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
 .input-group-text{
   background-color:#bfa16e; color:#fff; border:none;
 }
+/* ========================
+   SEARCH PILL FIX
+=========================== */
+.search-pill {
+  border: 1px solid rgba(191, 161, 110, 0.6) !important; /* viền vàng nhạt */
+  border-radius: 999px !important;   /* bo tròn */
+  background-color: transparent;     /* giữ trong suốt để nổi bật */
+  padding: .38rem .42rem .34rem .8rem;
+  margin-right: -90px;
+}
+/* Dark mode: chữ trắng + placeholder xám */
+.navbar-dark .search-input {
+  color: #fff !important;
+  caret-color: #fff;
+}
+.navbar-dark .search-input::placeholder {
+  color: rgba(255,255,255,.6);
+}
+
+/* Light mode: chữ đen + placeholder xám đậm */
+.navbar-light .search-input {
+  color: #212529 !important;
+}
+.navbar-light .search-input::placeholder {
+  color: rgba(0,0,0,.55);
+}
+/* Hover/focus thêm hiệu ứng */
+.search-pill:focus-within {
+  border-color: #bfa16e !important;
+  box-shadow: 0 0 0 0.15rem rgba(191,161,110,.25);
+}
+.navbar-light .search-pill {
+  background: #fff;
+  border: 1px solid rgba(0,0,0,.15);
+}
+.navbar-dark .search-pill {
+  background: #17181a;
+  border: 1px solid rgba(255,255,255,.25);
+}
 
 /* ========================
-   “LIÊN HỆ” – TẮT HOÀN TOÀN HIỆU ỨNG
+   “LIÊN HỆ” – TẮT HIỆU ỨNG
 =========================== */
 .navbar .nav-link.contact-link,
 .navbar .nav-link.contact-link:hover,
@@ -119,56 +190,66 @@ body.bg-dark  { background-color:#121212; color:#ffffff; }
   text-shadow:none !important;
   box-shadow:none !important;
   filter:none !important;
-  transform:none !important;   /* không nhô lên khi hover */
+  transform:none !important;
 }
-
-/* Màu tĩnh cho “Liên hệ” theo mode */
 .navbar-dark  .nav-link.contact-link { color:#ffffff !important; }
 .navbar-light .nav-link.contact-link { color:#343a40 !important; }
-
-/* Nếu vẫn bị rule khác tác động, chốt thêm hover màu vàng nhưng KHÔNG transform: */
 .navbar .nav-link.contact-link:hover { color:#bfa16e !important; }
+
 /* ========================
-   LOGO (to hơn, an toàn responsive)
+   HAMBURGER ICON (đảm bảo hiện trong dark)
 =========================== */
-:root{
-  --logo-h-desktop: 260px;  /* chỉnh lên/xuống tùy ý (220–300px) */
-  --logo-h-tablet: 200px;
-  --logo-h-mobile: 64px;
+.navbar-dark .navbar-toggler { border-color: rgba(255,255,255,.25); }
+.navbar-light .navbar-toggler { border-color: rgba(0,0,0,.15); }
+
+.navbar-dark .navbar-toggler-icon {
+  background-image: var(--bs-navbar-toggler-icon-bg, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"));
+}
+.navbar-light .navbar-toggler-icon {
+  background-image: var(--bs-navbar-toggler-icon-bg, url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e"));
 }
 
-/* thanh chứa logo (giữ mỏng nhưng không bóp ảnh) */
-.logo-bar{
-  line-height: 0;
-  padding-top: .25rem;
-  padding-bottom: .25rem;
-}
-
-/* ảnh logo */
-.navbar-logo-img{
-  display:block;
-  height: var(--logo-h-desktop);
-  max-width: none;             /* tránh bị giới hạn theo container */
-  object-fit: contain;
-  /* Kéo chồng lên navbar dưới để không đội chiều cao tổng thể quá nhiều */
-  margin-top: -48px;
-  margin-bottom: -100px;
-}
-
-/* Tablet */
+/* Ẩn toàn bộ logo-bar trên mobile để tránh 2 logo */
 @media (max-width: 991.98px){
-  .navbar-logo-img{
-    height: var(--logo-h-tablet);
-    margin-top: -52px;
-    margin-bottom: -68px;
+  .logo-bar { display: none !important; }
+}
+
+/* ... (giữ nguyên các phần bạn đã có) ... */
+
+/* HAMBURGER ICON hiển thị rõ */
+.navbar-dark .navbar-toggler { border-color: rgba(255,255,255,.25); }
+.navbar-light .navbar-toggler { border-color: rgba(0,0,0,.15); }
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255,255,255,0.85)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+.navbar-light .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(0,0,0,0.7)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+}
+
+/* Ẩn logo-bar trên mobile để tránh 2 logo */
+@media (max-width: 991.98px){
+  .logo-bar { display: none !important; }
+}
+
+/* LOGO trong navbar dành cho mobile: to hơn, dễ thấy */
+@media (max-width: 991.98px){
+  .navbar .navbar-brand img {
+    height: 56px !important;   /* tăng kích thước logo mobile */
   }
 }
 
-/* Mobile */
-@media (max-width: 575.98px){
-  .navbar-logo-img{
-    height: var(--logo-h-mobile);
-    margin-top: 0;
-    margin-bottom: 0;
+/* Đảm bảo menu mobile bung ra nhìn rõ và không bị phần dưới đè */
+@media (max-width: 991.98px){
+  .navbar .collapse {
+    width: 100%;
+    overflow: visible;
+  }
+  .navbar .collapse.show {
+    background-color: inherit;   /* cùng nền với navbar */
+    padding: .5rem 0;
+  }
+  .navbar .navbar-nav .nav-link {
+    padding: .65rem 0.25rem;
   }
 }
+
