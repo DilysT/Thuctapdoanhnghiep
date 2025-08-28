@@ -64,7 +64,7 @@
 /* ===== CARDS ===== */
 .hero-card {
   position: relative;
-  z-index: 3;                /* đảm bảo luôn trên các lớp trang trí */
+  z-index: 3;                
   overflow: hidden;
   border-radius: 12px;
   display: block;
@@ -72,7 +72,7 @@
   box-shadow: 0 6px 16px rgba(0,0,0,0.35);
   background: rgba(255,255,255,0.06);
   backdrop-filter: saturate(120%);
-  will-change: transform;    /* mượt khi hover */
+  will-change: transform;
 }
 
 .hero-card:hover { z-index: 4; }
@@ -93,21 +93,20 @@
   transform: scale(1.04); 
 }
 
+/* --- Overlay chia làm 2 phần --- */
 .hero-overlay {
   position: absolute;
   bottom: 0; left: 0; width: 100%;
-  background: linear-gradient(to top, rgba(0,0,0,0.65), transparent 60%);
   padding: 1rem;
-  transform: translateY(100%);
-  transition: transform 0.35s ease;
+  color: #fff;
 }
 
-.hero-card:hover .hero-overlay { transform: translateY(0%); }
+/* Tiêu đề + ngày: luôn hiển thị */
+.overlay-static {
+  position: relative;
+  z-index: 2;
+}
 
-.hero-title { font-size: 1rem; font-weight: 700; margin-bottom: 0.25rem; }
-.hero-date  { font-size: 0.85rem; opacity: 0.9; margin: 0; }
-
-/* Ngày dạng pill */
 .hero-date-badge{
   display:inline-block;padding:6px 10px;margin:0 0 8px 0;
   font-size:.85rem;font-weight:600;color:rgba(255,255,255,.95);line-height:1;
@@ -116,6 +115,51 @@
   box-shadow:0 2px 8px rgba(0,0,0,.35);
 }
 
-/* ===== Responsive ===== */
-@media (max-width: 991px){ .hero-img-wrapper{ height:300px; } }
-@media (max-width: 575px){ .hero-img-wrapper{ height:240px; } }
+.hero-title { 
+  font-size: 1.1rem; 
+  font-weight: 700; 
+  margin-bottom: 0.25rem; 
+}
+
+/* Nội dung phụ: ẩn ban đầu, hover mới trồi lên */
+.overlay-hover {
+  margin-top: .5rem;
+  transform: translateY(100%);
+  opacity: 0;
+  transition: all 0.35s ease;
+}
+
+.hero-card:hover .overlay-hover {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.hero-subtext { font-size: 0.9rem; line-height: 1.4; }
+
+/* Hiệu ứng tráng gương */
+.hero-card::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -75%;
+  width: 50%;
+  height: 100%;
+  background: linear-gradient(
+    120deg, 
+    rgba(255, 255, 255, 0) 0%, 
+    rgba(255, 255, 255, 0.4) 50%, 
+    rgba(255, 255, 255, 0) 100%
+  );
+  transform: skewX(-25deg);
+  z-index: 5;        /* nằm trên ảnh nhưng dưới text */
+}
+
+.hero-card:hover::after {
+  animation: shine 1s forwards;
+}
+
+@keyframes shine {
+  100% {
+    left: 125%;
+  }
+}

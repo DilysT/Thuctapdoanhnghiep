@@ -570,14 +570,15 @@ export default function HomePage() {
 </h2>
 
 <p style={{ color: theme.muted, fontSize: '1.05rem' }}>
-  Thành lập từ năm 2016, <strong>TS GLOBAL</strong> là đơn vị uy tín trong lĩnh vực sản xuất và thương mại may mặc, phục vụ cả thị trường nội địa và quốc tế.
+  Thành lập từ năm 2016, <strong>TS GLOBAL</strong> là doanh nghiệp chuyên sản xuất và xuất khẩu may mặc, được biết đến như một đối tác uy tín của nhiều thương hiệu trong và ngoài nước.
 </p>
 <p style={{ color: theme.muted }}>
-  Với dây chuyền hiện đại và đội ngũ tay nghề cao, chúng tôi chuyên cung cấp các sản phẩm may mặc chất lượng cao, đồng thời nhận gia công và bán sỉ (wholesale) với giá cả cạnh tranh, linh hoạt theo nhu cầu của khách hàng.
+  Với hệ thống nhà xưởng hiện đại, dây chuyền sản xuất khép kín và đội ngũ nhân công tay nghề cao, chúng tôi tập trung vào gia công, và cung ứng các sản phẩm may mặc chất lượng cao cho thị trường quốc tế. Bên cạnh đó, TS GLOBAL nhận sản xuất theo đơn hàng với mức giá cạnh tranh, đáp ứng linh hoạt mọi nhu cầu từ khách hàng.
 </p>
 <p style={{ color: theme.muted, marginBottom: 0 }}>
-  TS GLOBAL luôn cam kết mang đến <strong>chất lượng – tiến độ – sự hài lòng</strong>, trở thành đối tác tin cậy cho các thương hiệu, cửa hàng và chuỗi phân phối trong và ngoài nước.
+  Với phương châm <strong>chất lượng – tiến độ – uy tín</strong>, TS GLOBAL luôn cam kết mang đến sự hài lòng tối đa cho các thương hiệu, cửa hàng và hệ thống phân phối toàn cầu, góp phần khẳng định vị thế của ngành may mặc Việt Nam trên thị trường quốc tế.
 </p>
+
 
             </div>
           </div>
